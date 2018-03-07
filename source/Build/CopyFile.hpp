@@ -1,4 +1,9 @@
 
+#pragma once
+
+#include "System/MakePath.hpp"
+#include "System/CopyFile.hpp"
+
 namespace Build
 {
 	struct CopyFile : public Rule

@@ -14,12 +14,9 @@ namespace Build
 		Package(std::string name) {}
 	};
 	
-	class Environment
+	struct Environment
 	{
-	public:
-		Environment(char * const envp[])
-		{
-		}
+		char * const * envp;
 	};
 	
 	struct Task
@@ -41,52 +38,33 @@ namespace Build
 		const Environment & environment;
 		const Task & task;
 	};
-	
-	namespace System
-	{
-		struct MakePath : public Rule
-		{
-			using Rule::Rule;
-			
-			void operator()(const Path & path) const
-			{
-			}
-		};
-		
-		struct CopyFile : public Rule
-		{
-			using Rule::Rule;
-			
-			void operator()(const Path & source_file, const Path & destination_path) const
-			{
-			}
-		};
-	}
-	
-	struct Controller
-	{
-		int argc;
-		char *const * argv;
-		char *const * envp;
-		
-		int run() const {
-			Environment environment(envp);
-			Task task{environment};
-			
-			return 0;
-		}
-	};
 }
 
 #include "source/Build/CopyFile.hpp"
 #include "source/Build/CopyFiles.hpp"
 #include "source/Build/CopyHeaders.hpp"
 
+#include "source/Build/System/Execute.hpp"
+
 // #include "package/Build/Files.cpp"
 // #include "package/Build/HelloWorld.cpp"
 
 int main(int argc, char *const argv[], char *const envp[]) {
-	Build::Controller controller{argc, argv, envp};
-		
-	return controller.run();
+	Build::Environment environment{envp};
+	Build::Task task{environment};
+	
+	task.invoke<Build::System::Execute>("/bin/ls", "-lah");
 }
+
+// State compile_files(Paths source_files) {
+// 	for (auto & source_file : source_files)
+// 		compile_file(source_file);
+// }
+// 
+// State static_library(Paths source_files) {
+// 	auto object_files = compile_files(source_files);
+// 
+// 	auto archive = link_objects(object_files)
+// 
+// 	return archive;
+// }
