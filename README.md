@@ -22,7 +22,7 @@ auto test = root/"bin";
 run(bin.glob("*.cpp"));
 
 configuration(
-	Source("git://github.com"),
+	Source::Git("git://github.com"),
 	Require("system"),
 	Require("unit-tests"),
 	Require("language-c++14"),
