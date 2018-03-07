@@ -21,4 +21,4 @@ namespace Build
 			return task.invoke<CopyFiles>(headers, include_prefix());
 		}
 	};
-};
+}

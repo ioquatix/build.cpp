@@ -1,4 +1,4 @@
-//usr/bin/clang++ -O3 -std=c++14 "$0" -o build && ./build; exit
+//usr/bin/clang++ -O3 -std=c++14 "$0" -o build.bootstrap && ./build.bootstrap; exit
 
 #include <string>
 #include <vector>
@@ -24,10 +24,10 @@ namespace Build
 		const Environment & environment;
 		
 		template <typename RuleT, typename... ArgumentsT>
-		auto invoke(ArgumentsT... arguments) const {
+		auto invoke(ArgumentsT && ...arguments) const {
 			RuleT rule(environment, *this);
 			
-			return rule(arguments...);
+			return rule(std::forward<ArgumentsT>(arguments)...);
 		}
 	};
 	
@@ -44,7 +44,7 @@ namespace Build
 #include "source/Build/CopyFiles.hpp"
 #include "source/Build/CopyHeaders.hpp"
 
-#include "source/Build/System/Execute.hpp"
+#include "source/Build/CompileExecutable.hpp"
 
 // #include "package/Build/Files.cpp"
 // #include "package/Build/HelloWorld.cpp"
@@ -53,7 +53,7 @@ int main(int argc, char *const argv[], char *const envp[]) {
 	Build::Environment environment{envp};
 	Build::Task task{environment};
 	
-	task.invoke<Build::System::Execute>("/bin/ls", "-lah");
+	task.invoke<Build::CompileExecutable>(Build::Paths{"build.cpp"}, "build");
 }
 
 // State compile_files(Paths source_files) {

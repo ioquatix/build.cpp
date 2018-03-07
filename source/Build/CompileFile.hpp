@@ -10,8 +10,8 @@ namespace Build
 		void operator()(Path source_file, Path destination_path) const
 		{
 			task.invoke<System::Execute>(
-				"clang", "-o", destination_path.c_str(), source_file.c_str()
+				"/usr/bin/clang++", "-o", destination_path.c_str(), "-std=c++14", "-c", source_file.c_str()
 			);
 		}
 	};
-};
+}

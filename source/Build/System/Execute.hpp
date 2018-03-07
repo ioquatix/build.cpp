@@ -2,6 +2,7 @@
 #pragma once
 
 #include <unistd.h>
+#include <iostream>
 
 namespace Build
 {
@@ -15,6 +16,12 @@ namespace Build
 			void operator()(ArgumentsT... arguments) const
 			{
 				std::vector<const char *> argv{arguments...};
+				
+				for (auto arg : argv) {
+					std::cerr << arg << ' ';
+				} std::cerr << std::endl;
+				
+				argv.push_back(nullptr);
 				
 				pid_t pid = fork();
 				
@@ -36,5 +43,5 @@ namespace Build
 				}
 			}
 		};
-	};
-};
+	}
+}

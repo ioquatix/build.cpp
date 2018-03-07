@@ -16,4 +16,4 @@ namespace Build
 			task.invoke<System::CopyFile>(source_file, destination_path);
 		}
 	};
-};
+}

@@ -16,5 +16,5 @@ namespace Build
 				task.invoke<Execute>("cp", source_file.c_str(), destination_path.c_str());
 			}
 		};
-	};
-};
+	}
+}

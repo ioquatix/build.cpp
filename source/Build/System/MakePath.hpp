@@ -16,5 +16,5 @@ namespace Build
 				task.invoke<Execute>("mkdir", "-p", path.c_str());
 			}
 		};
-	};
-};
+	}
+}
