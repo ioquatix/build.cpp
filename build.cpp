@@ -44,7 +44,7 @@ namespace Build
 #include "source/Build/CopyFiles.hpp"
 #include "source/Build/CopyHeaders.hpp"
 
-#include "source/Build/CompileExecutable.hpp"
+#include "source/Build/Compile/Executable.hpp"
 
 // #include "package/Build/Files.cpp"
 // #include "package/Build/HelloWorld.cpp"
@@ -53,7 +53,7 @@ int main(int argc, char *const argv[], char *const envp[]) {
 	Build::Environment environment{envp};
 	Build::Task task{environment};
 	
-	task.invoke<Build::CompileExecutable>(Build::Paths{"build.cpp"}, "build");
+	task.invoke<Build::Compile::Executable>(Build::Paths{"build.cpp"}, "build");
 }
 
 // State compile_files(Paths source_files) {

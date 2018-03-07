@@ -3,7 +3,7 @@
 
 namespace Build
 {
-	namespace Linker
+	namespace Link
 	{
 		struct Executable : public Rule
 		{

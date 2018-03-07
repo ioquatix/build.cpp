@@ -3,9 +3,9 @@
 
 namespace Build
 {
-	namespace Linker
+	namespace Link
 	{
-		struct StaticLibrary : public Rule
+		struct Archive : public Rule
 		{
 			using Rule::Rule;
 			
