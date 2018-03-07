@@ -1,4 +1,4 @@
-//usr/bin/clang++ -O3 -std=c++14 "$0" -o build.bootstrap && ./build.bootstrap; exit
+//usr/bin/clang++ -Wall -std=c++14 "$0" -o build.bootstrap && ./build.bootstrap; exit
 
 #include <string>
 #include <vector>
