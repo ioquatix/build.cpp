@@ -1,70 +1,34 @@
-//usr/bin/clang++ -Wall -std=c++14 "$0" -o build.bootstrap && ./build.bootstrap; exit
+//usr/bin/clang++ -Wall -std=c++14 "$0" -o bin/build && bin/build; exit
 
-#include <string>
-#include <vector>
+#include "source/Build/Context.cpp"
+#include "source/Build/Package.cpp"
+#include "source/Build/Target.cpp"
+#include "source/Build/Environment.cpp"
+#include "source/Build/Task.cpp"
+#include "source/Build/Rule.cpp"
 
-namespace Build
-{
-	using Path = std::string;
-	using Paths = std::vector<std::string>;
+#include "build/packages/variant/build/package.hpp"
+#include "build/packages/standard-c++/build/package.hpp"
+#include "build/package.hpp"
+
+Build::Context make_context() {
+	using namespace Build;
 	
-	class Package
-	{
-	public:
-		Package(std::string name) {}
-	};
+	Context context;
 	
-	struct Environment
-	{
-		char * const * envp;
-	};
+	#include "build/packages/variant/build/package.cpp"
+	#include "build/packages/standard-c++/build/package.cpp"
+	#include "build/package.cpp"
 	
-	struct Task
-	{
-		const Environment & environment;
-		
-		template <typename RuleT, typename... ArgumentsT>
-		auto invoke(ArgumentsT && ...arguments) const {
-			RuleT rule(environment, *this);
-			
-			return rule(std::forward<ArgumentsT>(arguments)...);
-		}
-	};
-	
-	struct Rule
-	{
-		Rule(const Environment & environment, const Task & task) : environment(environment), task(task) {}
-		
-		const Environment & environment;
-		const Task & task;
-	};
+	return context;
 }
-
-#include "source/Build/CopyFile.hpp"
-#include "source/Build/CopyFiles.hpp"
-#include "source/Build/CopyHeaders.hpp"
-
-#include "source/Build/Compile/Executable.hpp"
-
-// #include "package/Build/Files.cpp"
-// #include "package/Build/HelloWorld.cpp"
 
 int main(int argc, char *const argv[], char *const envp[]) {
-	Build::Environment environment{envp};
-	Build::Task task{environment};
+	auto context = make_context();
 	
-	task.invoke<Build::Compile::Executable>(Build::Paths{"build.cpp"}, "build");
+	std::vector<std::string> arguments(argv, argv+argc);
+	
+	//environment = context.resolve(arguments);
+	
+	return 0;
 }
-
-// State compile_files(Paths source_files) {
-// 	for (auto & source_file : source_files)
-// 		compile_file(source_file);
-// }
-// 
-// State static_library(Paths source_files) {
-// 	auto object_files = compile_files(source_files);
-// 
-// 	auto archive = link_objects(object_files)
-// 
-// 	return archive;
-// }
