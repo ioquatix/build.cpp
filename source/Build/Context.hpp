@@ -20,13 +20,12 @@ namespace Build
 		
 		template <typename BuilderT>
 		void package(std::string name, BuilderT builder) {
-			auto package = _packages[name];
+			auto package = packages[name];
 			
 			builder(package);
 		}
 		
-	private:
-		std::map<std::string, Package> _packages;
+		std::map<std::string, Package> packages;
 	};
 }
 

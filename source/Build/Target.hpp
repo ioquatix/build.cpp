@@ -24,20 +24,18 @@ namespace Build
 		
 		void depends(std::string name)
 		{
-			_dependencies.push_back(name);
+			dependencies.push_back(name);
 		}
 		
 		template <typename BuilderT>
 		void provides(const std::string & name, BuilderT builder)
 		{
-			auto && provision = _provisions[name];
-			
-			builder(provision);
+			provisions[name] = builder;
 		}
 		
 		void provides(const std::string & name)
 		{
-			auto && provision = _provisions[name];
+			auto && provision = provisions[name];
 		}
 		
 		void alias(std::string name, std::string alias)
@@ -47,18 +45,17 @@ namespace Build
 		
 		void build(std::function<void(Task & task)> function)
 		{
-			_function = function;
+			this->function = function;
 		}
 		
 		void invoke(Task & task)
 		{
-			_function(task);
+			function(task);
 		}
 		
-	private:
-		std::function<void(Task & task)> _function;
+		std::function<void(Task & task)> function;
 		
-		std::vector<std::string> _dependencies;
-		std::map<std::string, Environment> _provisions;
+		std::vector<std::string> dependencies;
+		std::map<std::string, std::function<void(Environment &)>> provisions;
 	};
 }

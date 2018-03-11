@@ -8,6 +8,9 @@
 
 #pragma once
 
+#include "One.hpp"
+#include "Many.hpp"
+
 #include <map>
 #include <string>
 #include <memory>
@@ -20,6 +23,12 @@ namespace Build
 	{
 	public:
 		Environment() {}
+		
+		template <typename ValueT>
+		using One = Build::One<ValueT, const Environment &>;
+		
+		template <typename ValueT>
+		using Many = Build::Many<ValueT, const Environment &>;
 		
 		struct Wrapper
 		{

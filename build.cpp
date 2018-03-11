@@ -24,11 +24,21 @@ Build::Context make_context() {
 }
 
 int main(int argc, char *const argv[], char *const envp[]) {
+	using namespace Build;
+	
 	auto context = make_context();
 	
 	std::vector<std::string> arguments(argv, argv+argc);
 	
-	//environment = context.resolve(arguments);
+	Environment environment;
+	
+	for (auto && pair : context.packages) {
+		std::cerr << "Package: " << pair.first << std::endl;
+	}
+	
+	// auto && variant = context.packages["variant"];
+	// auto && variant_debug = variant.targets["variant-debug"];
+	// variant_debug.provisions["variant/debug"];
 	
 	return 0;
 }

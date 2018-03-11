@@ -25,12 +25,11 @@ namespace Build
 		
 		template <typename BuilderT>
 		void target(std::string name, BuilderT builder) {
-			auto target = _targets[name];
+			auto target = targets[name];
 			
 			builder(target);
 		}
 		
-	private:
-		std::map<std::string, Target> _targets;
+		std::map<std::string, Target> targets;
 	};
 }

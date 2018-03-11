@@ -1,5 +1,7 @@
 # Build.cpp
 
+**This project is an experiment to recreate parts of [teapot](http://teapot.nz) directly in C++**
+
 `Build.cpp` is a self-hosted package driven build tool primarily aimed at C++ projects, but general enough for any kind of dependency graph processing.
 
 In the root of your project `build.hpp`:
